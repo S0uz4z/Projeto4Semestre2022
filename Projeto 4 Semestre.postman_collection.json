@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "8dc7e337-8606-4be8-91b3-5bdf08947ff9",
+		"name": "Projeto 4 Semestre",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Inventario",
+			"item": [
+				{
+					"name": "Retorna Itens no Inventario",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar novo Item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"item\": {\r\n\t\t\"nome\": \"test1\",\r\n\t\t\"fabricante\": \"test1\",\r\n\t\t\"quantidade\": \"test1\",\r\n\t\t\"localizacao\": \"test1\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/inventario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"inventario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar item",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"item\": {\r\n\t\t\"nome\": \"test2\",\r\n\t\t\"fabricante\": \"test2\",\r\n\t\t\"quantidade\": \"test2\",\r\n\t\t\"localizacao\": \"test2\"\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/inventario/0292eae4-622b-4875-822b-8b60dc4e10da",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"inventario",
+								"0292eae4-622b-4875-822b-8b60dc4e10da"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
