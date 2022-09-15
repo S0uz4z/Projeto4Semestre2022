@@ -10,3 +10,8 @@ app.use(express.json());
 
 //Array que guardará temporariamente os itens.
 const listaItens = []
+
+//Endpoint para receber a requisição do tipo GET, e retornar todos os itens no inventário.
+app.get('/inventario', (req, res) => {
+    res.status(200).send(listaItens);
+})
