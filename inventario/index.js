@@ -42,3 +42,32 @@ app.post('/inventario', (req, res) => {
         item: novoItem
     });
 })
+
+//Endpoint para receber a requisição do tipo PUT, alterar um item e retornar mensagem de status da edição.
+app.put('/inventario/:id', (req, res) => {
+
+    //Atribui id vindo da URL da requisição a uma variável.
+    let idItem = req.params.id;
+
+    //Gera objeto com dados vindo do json do corpo da requisição.
+    const dados = req.body.item;
+
+    //Gera array com as chaves do objeto Dados.
+    let chavesItem = Object.keys(dados)
+
+    //Filtra array com itens e encontra o item com o id vindo da URL.
+    let item = listaItens.filter(itemFiltrado => {
+        return itemFiltrado.id === idItem;
+    })
+
+    //Map que, para cada chave, atribui o valor dos dados com a chave respectiva.
+    chavesItem.map(chave => {
+        item[0][chave] = dados[chave]
+    })
+
+    //Retorna o status da requisição, junto com a mensagem e o item editado.
+    res.status(200).send({
+        msg: "Item alterado com sucesso",
+        item: item[0]
+    });
+})
