@@ -71,3 +71,6 @@ app.put('/inventario/:id', (req, res) => {
         item: item[0]
     });
 })
+
+console.log('Microsserviço de Inventário iniciado.')
+app.listen(4000)
