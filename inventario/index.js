@@ -1,6 +1,7 @@
 //Imports 
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 //Criação do objeto que gerencia os métodos para crirmos os endpoints.
 const app = express();
@@ -16,8 +17,13 @@ app.get('/inventario', (req, res) => {
     res.status(200).send(listaItens);
 })
 
+//Endpoint para receber a requisição do tipo POST, e retornar dados vindos do barramento de eventos.
+app.post('/eventos', (req, res) => {
+    res.status(200).send(req.body)
+})
+
 //Endpoint para receber a requisição do tipo POST, cadastrar um novo item, e retornar mensagem de status do cadastro.
-app.post('/inventario', (req, res) => {
+app.post('/inventario', async (req, res) => {
 
     //Atribui json no corpo da requisição a uma variavel.
     let dados = req.body.item;
@@ -35,6 +41,14 @@ app.post('/inventario', (req, res) => {
 
     //Acrescenta o novo item ao array de itens.
     listaItens.push(novoItem);
+
+    //Método que envia requisição para microsserviço de barramento de eventos.
+    await axios.post("http://localhost:10000/eventos", {
+        tipo: "Novo item criado.",
+        dados: {
+            novoItem
+        }
+    })
 
     //Retorna status 201 de registro criado e retorna json com mensagem e o item criado.
     res.status(201).send({
