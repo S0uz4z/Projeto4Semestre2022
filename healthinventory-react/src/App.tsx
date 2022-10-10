@@ -1,13 +1,14 @@
+import React from 'react';
 import '../src/styles/main.css'
-import InputText from './components/InputText';
-import Button from './components/Button';
+import Button from '../src/components/Button'
+import InputText from '../src/components/InputText'
 
 function App() {
   return (
     <div className="App flex">
       <div className="w-[40%] h-screen flex flex-col bg-[#10543c]">
-        <div className="w-[40%] m-auto text-white text-center">
-          <i class="fa-solid fa-clipboard text-9xl py-3"></i>
+        <div className="w-[40%] m-auto text-white text-center flex flex-col">
+          <i className="fa-solid fa-clipboard text-9xl py-3"></i>
           <span>HEALTHINVENTORY</span>
         </div>
       </div>
