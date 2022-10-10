@@ -15,7 +15,9 @@ export default function Login() {
                     <span className="font-extrabold text-5xl text-[#10543c] block mb-12">Login</span>
                     <InputText placeholder='Usuário'></InputText>
                     <InputText placeholder='Senha' password={true}></InputText>
-                    <Button text='Entrar'></Button>
+                    <div className='m-8'>
+                        <Button text='Entrar'></Button>
+                    </div>
                     <a href='#'>
                         <span className="font-medium text-[#10543c] underline">Esqueceu sua senha?</span>
                     </a>
