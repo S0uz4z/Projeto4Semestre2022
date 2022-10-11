@@ -1,8 +1,6 @@
 import Button from "../components/Button"
 
-interface ManutencaoInventarioProps {
-    items: Array<any>
-}
+const items = [{ id: 1, nome: 'Lápis', quantidade: 5 }]
 
 function renderList(data: Array<any>) {
     return data.map((item, index) => {
@@ -15,10 +13,10 @@ function renderList(data: Array<any>) {
     })
 }
 
-export default function ManutencaoInventario(props: ManutencaoInventarioProps) {
+export default function ManutencaoInventario() {
     return (
-        <div className="w-full h-screen">
-            <div className="w-[50%] min-h-[50%] border-black border-2 border-solid m-auto mt-10 text-center relative">
+        <div className="w-full h-screen mt-10">
+            <div className="w-[50%] min-h-[50%] border-black border-2 border-solid m-auto text-center relative">
                 <span className="font-bold text-4xl text-black">Inventário</span>
                 <div className="px-5">
                     <div className="flex flex-row list-none font-bold">
@@ -26,7 +24,7 @@ export default function ManutencaoInventario(props: ManutencaoInventarioProps) {
                         <span className="w-[50%]">Quantidade</span>
                     </div>
                     <ul>
-                        {renderList(props.items)}
+                        {renderList(items)}
                     </ul>
                 </div>
                 <div className="flex flex-row absolute bottom-0 p-5">
