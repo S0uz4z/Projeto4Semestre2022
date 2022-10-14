@@ -1,6 +1,8 @@
 import Button from '../components/Button'
 import InputText from '../components/InputText'
 
+function entrar(){console.log('asdased')}
+
 export default function Login() {
     return (
         <div className="App flex">
@@ -16,7 +18,7 @@ export default function Login() {
                     <InputText placeholder='Usuário'></InputText>
                     <InputText placeholder='Senha' password={true}></InputText>
                     <div className='m-8'>
-                        <Button text='Entrar'></Button>
+                        <Button function={entrar} text='Entrar'></Button>
                     </div>
                     <a href='#'>
                         <span className="font-medium text-[#10543c] underline">Esqueceu sua senha?</span>
