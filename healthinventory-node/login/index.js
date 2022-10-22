@@ -1,5 +1,6 @@
 //Imports 
 import express from 'express';
+import cors from 'cors'
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
@@ -7,6 +8,7 @@ import axios from 'axios';
 const app = express();
 
 //Adição de um body parser para json.
+app.use(cors())
 app.use(express.json());
 
 const usuariosBanco = [{
@@ -22,7 +24,7 @@ app.post('/login', (req, res) => {
     if (usuarioAutenticado.length > 0) {
         res.status(200).send({message: 'Usuário encontrado com sucesso!', usuario: usuarioAutenticado[0]})
     } else {
-        res.status(200).send({message: 'Usuário não foi encontrado'})
+        res.status(404).send({message: 'Usuário não foi encontrado'})
     }
     
 })
