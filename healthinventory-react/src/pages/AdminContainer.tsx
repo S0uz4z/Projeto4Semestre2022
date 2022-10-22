@@ -1,5 +1,6 @@
 import { CSSProperties, useState } from "react"
 import ManutencaoInventario from "./ManutencaoInventario";
+import Solicitacoes from "./Solicitacoes";
 
 export default function AdminContainer() {
     const opcoesAdmin = {
@@ -18,17 +19,17 @@ export default function AdminContainer() {
 
     const renderOpcoesAdmin = () => {
         switch (selected) {
+            case opcoesAdmin.solicitacoes:
+                return (
+                    <Solicitacoes></Solicitacoes>
+                )
+                break;
             case opcoesAdmin.manutencaoInventario:
                 return (
                     <ManutencaoInventario></ManutencaoInventario>
                 )
                 break;
             case opcoesAdmin.manutencaoUsuario:
-                return (
-                    <div></div>
-                )
-                break;
-            case opcoesAdmin.solicitacoes:
                 return (
                     <div></div>
                 )
