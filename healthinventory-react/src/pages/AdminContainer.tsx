@@ -1,30 +1,53 @@
-import { useState } from "react"
+import { CSSProperties, useState } from "react"
 import ManutencaoInventario from "./ManutencaoInventario";
 
 export default function AdminContainer() {
     const opcoesAdmin = {
+        solicitacoes: "solicitacoes",
         manutencaoInventario: "manutInvent",
         manutencaoUsuario: "manutUsu"
     }
     const [selected, setSelected] = useState(opcoesAdmin.manutencaoInventario);
 
+    const spanSelectedStyle : CSSProperties = {
+        color: "#10543c",
+        borderBottom: 2,
+        borderBottomColor: "#10543c",
+        borderBottomStyle: "solid"
+    }
+
     const renderOpcoesAdmin = () => {
-        if (selected == opcoesAdmin.manutencaoInventario) {
-            return (
-                <ManutencaoInventario></ManutencaoInventario>
-            )
-        } else {
-            // return (
-            //     <ManutencaoUsuario></ManutencaoUsuario>
-            // )
+        switch (selected) {
+            case opcoesAdmin.manutencaoInventario:
+                return (
+                    <ManutencaoInventario></ManutencaoInventario>
+                )
+                break;
+            case opcoesAdmin.manutencaoUsuario:
+                return (
+                    <div></div>
+                )
+                break;
+            case opcoesAdmin.solicitacoes:
+                return (
+                    <div></div>
+                )
+                break;
         }
     }
 
     return (
         <div>
-            <div className="w-full h-8 bg-[#d9d9d9] flex flex-row justify-center items-center">
-                <span style={{ color: selected == opcoesAdmin.manutencaoInventario ? "white" : "black" }} onClick={() => { setSelected(opcoesAdmin.manutencaoInventario) }} className="text-black font-bold text-base mr-4 cursor-pointer hover:text-white transition-all">Manutenção de Inventário</span>
-                <span style={{ color: selected == opcoesAdmin.manutencaoUsuario ? "white" : "black" }} onClick={() => { setSelected(opcoesAdmin.manutencaoUsuario) }} className="text-black font-bold text-base cursor-pointer hover:text-white transition-all">Manutenção de Usuários</span>
+            <div className="w-full h-8 bg-[#d9d9d9] flex flex-row justify-between items-center text-center">
+                <div className="w-[33%]">
+                    <span style={selected == opcoesAdmin.solicitacoes ? spanSelectedStyle : { color: "black" }} onClick={() => { setSelected(opcoesAdmin.solicitacoes) }} className="text-black font-bold text-base mx-10 cursor-pointer hover:text-white transition-all">Solicitações</span>
+                </div>
+                <div className="w-[33%]">
+                    <span style={selected == opcoesAdmin.manutencaoInventario ? spanSelectedStyle : { color: "black" }} onClick={() => { setSelected(opcoesAdmin.manutencaoInventario) }} className="text-black font-bold text-base mx-10 cursor-pointer hover:text-white transition-all">Manutenção de Inventário</span>
+                </div>
+                <div className="w-[33%]">
+                    <span style={selected == opcoesAdmin.manutencaoUsuario ? spanSelectedStyle : { color: "black" }} onClick={() => { setSelected(opcoesAdmin.manutencaoUsuario) }} className="text-black font-bold text-base mx-10 cursor-pointer hover:text-white transition-all">Manutenção de Usuários</span>
+                </div>
             </div>
             {renderOpcoesAdmin()}
         </div>
