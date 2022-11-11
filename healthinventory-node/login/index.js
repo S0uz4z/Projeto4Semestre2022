@@ -1,8 +1,8 @@
 //Imports 
 import express from 'express';
 import cors from 'cors'
-import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
+import mysql from 'mysql'
+import config from ''
 
 //Criação do objeto que gerencia os métodos para crirmos os endpoints.
 const app = express();
@@ -10,6 +10,22 @@ const app = express();
 //Adição de um body parser para json.
 app.use(cors())
 app.use(express.json());
+
+//Mysql connection
+let con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "@Usuario10.",
+    database: "healthinventory"
+})
+
+con.connect(function (err) { 
+    if (!err) {
+        console.log("Connected!");
+    } else {
+        console.log("Error to connect")
+    }
+})
 
 const usuariosBanco = [{
     id: '8ad17d7e-98ad-4a78-b5b3-1b175c162108',
