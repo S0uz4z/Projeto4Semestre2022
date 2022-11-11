@@ -3,10 +3,10 @@ import "../src/styles/main.css";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Menu from "./pages/Menu";
+import { connect } from "react-redux";
 
 function App() {
   return (
-    
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login></Login>}></Route>
@@ -16,4 +16,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (store: any) => ({
+  usuarioLogado: store.usuarioLogado,
+});
+
+export default connect(mapStateToProps)(App);

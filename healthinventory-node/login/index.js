@@ -16,7 +16,7 @@ const usuariosBanco = [{
     email: 'usuarioteste@test.com',
     usuario: 'teste',
     senha: '123',
-    tipo: 'admin'
+    tipo: { valor: "admin", label: "Administrador" }
 }]
 
 app.post('/login', (req, res) => {

@@ -2,13 +2,11 @@ import Button from "../components/Button";
 import InputText from "../components/InputText";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { usuarioLogadoAction } from "../actions";
 import Swal from "sweetalert2";
 
-const mapStateToProps = (store: any) => ({
-  usuarioLogado: store.usuarioLogado,
-});
+
 
 function Login(props: any) {
   const navigate = useNavigate();
@@ -34,7 +32,6 @@ function Login(props: any) {
 
     axios(config)
       .then(function (response) {
-        console.log(response.data.usuario);
         dispatch(usuarioLogadoAction(response.data.usuario));
         navigate("/index");
       })
@@ -79,4 +76,4 @@ function Login(props: any) {
   );
 }
 
-export default connect(mapStateToProps)(Login);
+export default Login;
