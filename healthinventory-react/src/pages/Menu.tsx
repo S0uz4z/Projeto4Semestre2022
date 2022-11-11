@@ -19,7 +19,7 @@ interface Tipo {
 }
 
 const renderMenu = (usuario: Usuario) => {
-    if (usuario.tipo.valor == "admin") {
+    if (usuario.tipo.valor === "admin") {
         return (<AdminContainer></AdminContainer>)
     } else {
         // return(<UsuarioContainer></UsuarioContainer>)
