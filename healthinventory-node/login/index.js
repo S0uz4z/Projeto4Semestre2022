@@ -15,7 +15,8 @@ const usuariosBanco = [{
     id: '8ad17d7e-98ad-4a78-b5b3-1b175c162108',
     email: 'usuarioteste@test.com',
     usuario: 'teste',
-    senha: '123'
+    senha: '123',
+    tipo: 'admin'
 }]
 
 app.post('/login', (req, res) => {
@@ -29,5 +30,5 @@ app.post('/login', (req, res) => {
     
 })
 
-console.log('Microsserviço de Inventário iniciado.')
+console.log('Microsserviço de Login iniciado.')
 app.listen(7000)
