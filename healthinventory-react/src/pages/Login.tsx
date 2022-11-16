@@ -6,8 +6,6 @@ import { useDispatch } from "react-redux";
 import { usuarioLogadoAction } from "../actions";
 import Swal from "sweetalert2";
 
-
-
 function Login(props: any) {
   const navigate = useNavigate();
   const dispatch = useDispatch();

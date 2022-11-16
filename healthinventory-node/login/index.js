@@ -2,7 +2,7 @@
 import express from 'express';
 import cors from 'cors'
 import mysql from 'mysql'
-import config from ''
+// import config from ''
 
 //Criação do objeto que gerencia os métodos para crirmos os endpoints.
 const app = express();
@@ -15,15 +15,16 @@ app.use(express.json());
 let con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "@Usuario10.",
+    password: "1234",
     database: "healthinventory"
 })
 
-con.connect(function (err) { 
+con.connect(function (err) {
     if (!err) {
         console.log("Connected!");
     } else {
         console.log("Error to connect")
+        console.log(err)
     }
 })
 
@@ -32,18 +33,33 @@ const usuariosBanco = [{
     email: 'usuarioteste@test.com',
     usuario: 'teste',
     senha: '123',
-    tipo: { valor: "admin", label: "Administrador" }
+    tipo: 'admin'
+},
+{
+    id: '8ad17d7e-98ad-4a78-b5b3-1b175c162109',
+    email: 'usuarioteste@test.com',
+    usuario: 'teste2',
+    senha: '123',
+    tipo: 'user'
 }]
+
+con.query("SELECT * FROM usuarios", function (err, result, fields) {
+    if (!err)
+        console.log(result);
+});
 
 app.post('/login', (req, res) => {
     let infoUsuario = req.body;
-    let usuarioAutenticado = usuariosBanco.filter((usuarioBanco) => { return usuarioBanco.usuario == infoUsuario.usuario && usuarioBanco.senha == infoUsuario.senha })
-    if (usuarioAutenticado.length > 0) {
-        res.status(200).send({message: 'Usuário encontrado com sucesso!', usuario: usuarioAutenticado[0]})
-    } else {
-        res.status(404).send({message: 'Usuário não foi encontrado'})
-    }
-    
+    let usuariosBanco = con.query(`select * from usuarios where usuario = ${infoUsuario.usuario} and senha = ${infoUsuario.senha}`)
+    console.log(usuariosBanco)
+    // let usuarioAutenticado = usuariosBanco.filter((usuarioBanco) => { return usuarioBanco.usuario == infoUsuario.usuario && usuarioBanco.senha == infoUsuario.senha })
+    // let usuarioAutenticado = usuariosBanco.filter((usuarioBanco) => { return usuarioBanco.usuario == infoUsuario.usuario && usuarioBanco.senha == infoUsuario.senha })
+    // if (usuarioAutenticado.length > 0) {
+    //     res.status(200).send({ message: 'Usuário encontrado com sucesso!', usuario: usuarioAutenticado[0] })
+    // } else {
+    //     res.status(404).send({ message: 'Usuário não foi encontrado' })
+    // }
+
 })
 
 console.log('Microsserviço de Login iniciado.')

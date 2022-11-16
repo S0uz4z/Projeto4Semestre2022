@@ -6,16 +6,16 @@ import { useSelector } from "react-redux";
 interface Usuario {
   id: number;
   nome: string;
-  tipo: Tipo;
+  tipo: string;
 }
 
-interface Tipo {
-  valor: string;
-  label: string;
+const labelTipoUsuario: any = {
+  admin: "Administrador",
+  user: "Usuário"
 }
 
 const renderMenu = (usuario: Usuario) => {
-  if (usuario?.tipo?.valor === "admin") {
+  if (usuario?.tipo === "admin") {
     return <AdminContainer></AdminContainer>;
   } else {
     // return(<UsuarioContainer></UsuarioContainer>)
@@ -32,7 +32,9 @@ export default function Menu() {
 
   return (
     <div>
-      <Navbar text={`Olá ${usuarioLogado?.usuarioLogado?.tipo?.label}!`}></Navbar>
+      <Navbar
+        text={`Olá ${labelTipoUsuario[usuarioLogado?.usuarioLogado?.tipo]}!`}
+      ></Navbar>
       {renderMenu(usuarioLogado?.usuarioLogado)}
     </div>
   );

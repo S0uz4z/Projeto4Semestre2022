@@ -1,5 +1,4 @@
-const initialState = { 
-}
+const initialState = {}
 
 export const usuarioLogadoReducer = (state = initialState, action) => { 
     switch (action.type) {
