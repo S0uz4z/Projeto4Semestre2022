@@ -2,19 +2,51 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import mysql from 'mysql';
+import cors from 'cors';
 
 //Criação do objeto que gerencia os métodos para crirmos os endpoints.
 const app = express();
 
 //Adição de um body parser para json.
 app.use(express.json());
+app.use(cors())
 
-//Array que guardará temporariamente os itens.
-const listaItens = []
+//Informações do Banco
+let con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "@Usuario10.",
+    database: "healthinventory"
+})
+
+con.connect(function (err) {
+    if (!err) {
+        console.log("Connected!");
+    } else {
+        console.log("Error to connect")
+        console.log(err)
+    }
+})
 
 //Endpoint para receber a requisição do tipo GET, e retornar todos os itens no inventário.
 app.get('/inventario', (req, res) => {
-    res.status(200).send(listaItens);
+    let items = []
+    con.query('select * from itens', async (err, result) => {
+        items = {
+            msg: 'Itens encontrados com sucesso!',
+            evento: 'Busca de Item',
+            result
+        }
+        try {
+            await axios.post('http://localhost:10000/eventos', items)
+            res.status(200).send(items);
+        } catch (err) {
+            res.status(500).send({
+                msg:"Erro ao se conectar com barramento de eventos."
+            });
+        }
+    })
 })
 
 //Endpoint para receber a requisição do tipo POST, e retornar dados vindos do barramento de eventos.
