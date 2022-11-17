@@ -4,15 +4,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { Store } from "./store";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+const queryClient = new QueryClient();
+
 root.render(
   // <React.StrictMode>
-    <Provider store={Store}>
+  <Provider store={Store}>
+    <QueryClientProvider client={queryClient}>
       <App />
-    </Provider>
+    </QueryClientProvider>
+  </Provider>
   // </React.StrictMode>
 );
 
