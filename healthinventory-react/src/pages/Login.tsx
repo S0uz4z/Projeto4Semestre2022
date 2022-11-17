@@ -31,6 +31,7 @@ function Login(props: any) {
     axios(config)
       .then(function (response) {
         dispatch(usuarioLogadoAction(response.data.usuario));
+        sessionStorage.setItem('usuarioLogado', JSON.stringify(response.data.usuario))
         navigate("/index");
       })
       .catch(function (error) {
