@@ -1,5 +1,6 @@
 import { CSSProperties, useState } from "react"
 import ManutencaoInventario from "./ManutencaoInventario";
+import ManutencaoUsuario from "./ManutencaoUsuario";
 import Solicitacoes from "./Solicitacoes";
 
 export default function AdminContainer() {
@@ -31,7 +32,7 @@ export default function AdminContainer() {
                 break;
             case opcoesAdmin.manutencaoUsuario:
                 return (
-                    <div></div>
+                    <ManutencaoUsuario></ManutencaoUsuario>
                 )
                 break;
         }
