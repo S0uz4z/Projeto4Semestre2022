@@ -15,7 +15,7 @@ app.use(express.json());
 let con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "1234",
+    password: "@Usuario10.",
     database: "healthinventory"
 })
 
@@ -28,38 +28,26 @@ con.connect(function (err) {
     }
 })
 
-const usuariosBanco = [{
-    id: '8ad17d7e-98ad-4a78-b5b3-1b175c162108',
-    email: 'usuarioteste@test.com',
-    usuario: 'teste',
-    senha: '123',
-    tipo: 'admin'
-},
-{
-    id: '8ad17d7e-98ad-4a78-b5b3-1b175c162109',
-    email: 'usuarioteste@test.com',
-    usuario: 'teste2',
-    senha: '123',
-    tipo: 'user'
-}]
-
-con.query("SELECT * FROM usuarios", function (err, result, fields) {
-    if (!err)
-        console.log(result);
-});
-
 app.post('/login', (req, res) => {
     let infoUsuario = req.body;
-    let usuariosBanco = con.query(`select * from usuarios where usuario = ${infoUsuario.usuario} and senha = ${infoUsuario.senha}`)
-    console.log(usuariosBanco)
-    // let usuarioAutenticado = usuariosBanco.filter((usuarioBanco) => { return usuarioBanco.usuario == infoUsuario.usuario && usuarioBanco.senha == infoUsuario.senha })
-    // let usuarioAutenticado = usuariosBanco.filter((usuarioBanco) => { return usuarioBanco.usuario == infoUsuario.usuario && usuarioBanco.senha == infoUsuario.senha })
-    // if (usuarioAutenticado.length > 0) {
-    //     res.status(200).send({ message: 'Usuário encontrado com sucesso!', usuario: usuarioAutenticado[0] })
-    // } else {
-    //     res.status(404).send({ message: 'Usuário não foi encontrado' })
-    // }
-
+    let usuariosBanco;
+    try { 
+        con.query(`select * from usuarios where usuario = '${infoUsuario.usuario}' and senha = '${infoUsuario.senha}'`, (err, result) => {
+            if (!err) {
+                if (result.length > 0) {
+                    usuariosBanco = result[0]
+                    res.status(200).send({ message: 'Usuário encontrado com sucesso!', usuario: usuariosBanco })
+                } else { 
+                    res.status(404).send({ message: 'Usuário não foi encontrado.' })
+                }
+            } else { 
+                throw Error
+            }
+        })
+    }
+    catch (err) {
+        res.status(404).send({ message: 'Houve um erro ao realizar o login.' })
+     }
 })
 
 console.log('Microsserviço de Login iniciado.')
