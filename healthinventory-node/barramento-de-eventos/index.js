@@ -14,7 +14,7 @@ app.use(express.json());
 let con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "@Usuario10.",
+    password: "1234",
     database: "healthinventory"
 })
 
@@ -35,8 +35,6 @@ app.post('/eventos', async (req, res) => {
 
     //Criação do uuidv4
     let idEvento = uuidv4();
-
-    let date = new Date()
 
     con.query(`INSERT INTO eventos (id, descric, dataHora) VALUES ('${idEvento}', '${evento}', current_timestamp())`, async () => {
 

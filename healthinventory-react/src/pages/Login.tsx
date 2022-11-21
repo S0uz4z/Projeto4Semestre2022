@@ -64,11 +64,11 @@ function Login(props: any) {
           <div className="m-8">
             <Button function={entrar} text="Entrar"></Button>
           </div>
-          <a href="#">
+          {/* <a href="#">
             <span className="font-medium text-[#10543c] underline">
               Esqueceu sua senha?
             </span>
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

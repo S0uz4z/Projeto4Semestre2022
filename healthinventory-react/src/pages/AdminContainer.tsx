@@ -5,7 +5,6 @@ import Solicitacoes from "./Solicitacoes";
 
 export default function AdminContainer() {
     const opcoesAdmin = {
-        solicitacoes: "solicitacoes",
         manutencaoInventario: "manutInvent",
         manutencaoUsuario: "manutUsu"
     }
@@ -20,11 +19,6 @@ export default function AdminContainer() {
 
     const renderOpcoesAdmin = () => {
         switch (selected) {
-            case opcoesAdmin.solicitacoes:
-                return (
-                    <Solicitacoes></Solicitacoes>
-                )
-                break;
             case opcoesAdmin.manutencaoInventario:
                 return (
                     <ManutencaoInventario></ManutencaoInventario>
@@ -32,7 +26,8 @@ export default function AdminContainer() {
                 break;
             case opcoesAdmin.manutencaoUsuario:
                 return (
-                    <ManutencaoUsuario></ManutencaoUsuario>
+                    // <ManutencaoUsuario></ManutencaoUsuario>
+                    <div>1</div>
                 )
                 break;
         }
@@ -41,13 +36,10 @@ export default function AdminContainer() {
     return (
         <div>
             <div className="w-full h-8 bg-[#d9d9d9] flex flex-row justify-between items-center text-center">
-                <div className="w-[33%]">
-                    <span style={selected == opcoesAdmin.solicitacoes ? spanSelectedStyle : { color: "black" }} onClick={() => { setSelected(opcoesAdmin.solicitacoes) }} className="text-black font-bold text-base mx-10 cursor-pointer hover:text-white transition-all">Solicitações</span>
-                </div>
-                <div className="w-[33%]">
+                <div className="w-[50%]">
                     <span style={selected == opcoesAdmin.manutencaoInventario ? spanSelectedStyle : { color: "black" }} onClick={() => { setSelected(opcoesAdmin.manutencaoInventario) }} className="text-black font-bold text-base mx-10 cursor-pointer hover:text-white transition-all">Manutenção de Inventário</span>
                 </div>
-                <div className="w-[33%]">
+                <div className="w-[50%]">
                     <span style={selected == opcoesAdmin.manutencaoUsuario ? spanSelectedStyle : { color: "black" }} onClick={() => { setSelected(opcoesAdmin.manutencaoUsuario) }} className="text-black font-bold text-base mx-10 cursor-pointer hover:text-white transition-all">Manutenção de Usuários</span>
                 </div>
             </div>

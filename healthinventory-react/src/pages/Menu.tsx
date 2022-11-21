@@ -27,8 +27,8 @@ export default function Menu() {
   const [usuarioLogado, setUsuarioLogado] = useState<any>();
 
   useEffect(() => {
-    setUsuarioLogado(usuarioSelector);
-  }, [usuarioLogado]);
+      setUsuarioLogado(usuarioSelector)
+  }, []);
 
   return (
     <div>

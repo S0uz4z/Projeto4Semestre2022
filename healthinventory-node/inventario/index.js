@@ -16,7 +16,7 @@ app.use(cors())
 let con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "@Usuario10.",
+    password: "1234",
     database: "healthinventory"
 })
 
@@ -58,64 +58,89 @@ app.post('/eventos', (req, res) => {
 app.post('/inventario', async (req, res) => {
 
     //Atribui json no corpo da requisição a uma variavel.
-    let dados = req.body.item;
+    let dados = req.body;
 
-    //Gera um uuid que será atribuído ao novo item.
-    let itemId = uuidv4();
-
-    //Cria objeto com uuid gerado.
-    const novoItem = { id: itemId }
+    //Cria objeto.
+    const novoItem = {}
 
     //Map que cria uma chave e valor com dados vindos do objeto da requisição.
     Object.entries(dados).map(entries => {
         novoItem[entries[0]] = entries[1];
     })
 
-    //Acrescenta o novo item ao array de itens.
-    listaItens.push(novoItem);
-
     //Método que envia requisição para microsserviço de barramento de eventos.
-    await axios.post("http://localhost:10000/eventos", {
-        tipo: "Novo item criado.",
-        dados: {
-            novoItem
+    con.query(`INSERT INTO itens (nome, quantidade) VALUES ("${novoItem.nomeItem}", ${novoItem.qtdItem})`, async (err, result) => {
+
+        let items = {
+            msg: 'Item craido com sucesso!',
+            evento: 'Criação de Item',
+            result
+        }
+        try {
+            await axios.post('http://localhost:10000/eventos', items)
+            res.status(200).send({
+                msg: "Item criado com sucesso",
+                item: novoItem
+            });
+        } catch (err) {
+            res.status(500).send({
+                msg:"Erro ao se conectar com barramento de eventos."
+            });
         }
     })
-
-    //Retorna status 201 de registro criado e retorna json com mensagem e o item criado.
-    res.status(201).send({
-        msg: "Item criado com sucesso",
-        item: novoItem
-    });
 })
 
-//Endpoint para receber a requisição do tipo PUT, alterar um item e retornar mensagem de status da edição.
+//Endpoint para receber a requisição do tipo DELETE, excluir um item e retornar mensagem de status da exclusão.
 app.put('/inventario/:id', (req, res) => {
 
     //Atribui id vindo da URL da requisição a uma variável.
     let idItem = req.params.id;
 
-    //Gera objeto com dados vindo do json do corpo da requisição.
-    const dados = req.body.item;
+    let infoItem = req.body;
 
-    //Gera array com as chaves do objeto Dados.
-    let chavesItem = Object.keys(dados)
-
-    //Filtra array com itens e encontra o item com o id vindo da URL.
-    let item = listaItens.filter(itemFiltrado => {
-        return itemFiltrado.id === idItem;
+    con.query(`UPDATE itens SET nome = '${infoItem.nome}', quantidade = ${infoItem.qtd} WHERE id = ${idItem}`, async (err, result) => {
+        let items = {
+            msg: 'Item editado com sucesso!',
+            evento: 'Edição de Item',
+            result
+        }
+        try {
+            await axios.post('http://localhost:10000/eventos', items)
+            res.status(200).send({
+                msg: "Item deletado com sucesso"
+            });
+        } catch (err) {
+            res.status(500).send({
+                msg:"Erro ao se conectar com barramento de eventos."
+            });
+        }
     })
+})
 
-    //Map que, para cada chave, atribui o valor dos dados com a chave respectiva.
-    chavesItem.map(chave => {
-        item[0][chave] = dados[chave]
+//Endpoint para receber a requisição do tipo DELETE, excluir um item e retornar mensagem de status da exclusão.
+app.delete('/inventario/:id', (req, res) => {
+
+    //Atribui id vindo da URL da requisição a uma variável.
+    let idItem = req.params.id;
+
+    con.query(`delete from itens where id = ${idItem}`, async (err, result) => {
+        console.log(err)
+        let items = {
+            msg: 'Item deletado com sucesso!',
+            evento: 'Delete de Item',
+            result
+        }
+        try {
+            await axios.post('http://localhost:10000/eventos', items)
+            res.status(200).send({
+                msg: "Item deletado com sucesso"
+            });
+        } catch (err) {
+            res.status(500).send({
+                msg:"Erro ao se conectar com barramento de eventos."
+            });
+        }
     })
-
-    //Retorna o status da requisição, junto com a mensagem e o item editado.
-    res.status(200).send({
-        msg: "Item alterado com sucesso",
-        item: item[0]
-    });
 })
 
 console.log('Microsserviço de Inventário iniciado.')
