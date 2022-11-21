@@ -29,6 +29,7 @@ con.connect(function (err) {
 
 //Endpoint para receber requisição do tipo POST, e retornar requisições recebidas de outros microsserviços para os mesmos.
 app.post('/eventos', async (req, res) => {
+    
 
     //Criação de constante que recebe corpo da requisição.
     const evento = req.body.evento;
@@ -36,8 +37,8 @@ app.post('/eventos', async (req, res) => {
     //Criação do uuidv4
     let idEvento = uuidv4();
 
-    con.query(`INSERT INTO eventos (id, descric, dataHora) VALUES ('${idEvento}', '${evento}', current_timestamp())`, async () => {
-
+    con.query(`INSERT INTO eventos (id, descric, dataHora) VALUES ('${idEvento}', '${evento}', current_timestamp())`, async (err) => {
+        console.log(err)
         //Método que envia requisição para microsserviço de inventário.
         await axios.post('http://localhost:4000/eventos', evento)
         res.status(201).send(

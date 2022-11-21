@@ -72,10 +72,11 @@ app.post('/inventario', async (req, res) => {
     con.query(`INSERT INTO itens (nome, quantidade) VALUES ("${novoItem.nomeItem}", ${novoItem.qtdItem})`, async (err, result) => {
 
         let items = {
-            msg: 'Item craido com sucesso!',
+            msg: 'Item criado com sucesso!',
             evento: 'Criação de Item',
             result
         }
+        console.log(items)
         try {
             await axios.post('http://localhost:10000/eventos', items)
             res.status(200).send({
