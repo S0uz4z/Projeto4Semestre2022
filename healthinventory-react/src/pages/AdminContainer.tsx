@@ -26,8 +26,7 @@ export default function AdminContainer() {
                 break;
             case opcoesAdmin.manutencaoUsuario:
                 return (
-                    // <ManutencaoUsuario></ManutencaoUsuario>
-                    <div>1</div>
+                    <ManutencaoUsuario></ManutencaoUsuario>
                 )
                 break;
         }
