@@ -10,7 +10,7 @@ export default function ManutencaoUsuario() {
   const [rerender, setRerender] = useState("buildRender");
   const navigate = useNavigate();
   const {
-    data: items,
+    data: users,
     isLoading,
     refetch,
   } = useQuery("getUsers", getUsers, { refetchOnWindowFocus: false });
@@ -70,7 +70,7 @@ export default function ManutencaoUsuario() {
   async function setUserEditado(data: any) {
     var config = {
       method: "put",
-      url: `http://localhost:4000/usuário/${data.id}`,
+      url: `http://localhost:9000/usuarios/${data.userId}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -96,7 +96,7 @@ export default function ManutencaoUsuario() {
   async function setUserDeletado(id: any) {
     var config = {
       method: "delete",
-      url: `http://localhost:7000/usuario/${id}`,
+      url: `http://localhost:9000/usuarios/${id}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -133,16 +133,20 @@ export default function ManutencaoUsuario() {
       novoUserIconCheck.className =
         "fa-solid fa-check text-white inline absolute z-50 left-0 top-0 p-3 cursor-pointer";
       novoUserIconCheck.onclick = async () => {
-        let nomeUser = document.getElementById("nomeUser") as HTMLInputElement;
         let usuarioUser = document.getElementById("usuarioUser") as HTMLInputElement;
         let senhaUser = document.getElementById("senhaUser") as HTMLInputElement;
+        let tipoUser = document.getElementById("tipoUser") as HTMLInputElement;
 
         let novoUser = {
-          nomeUser: nomeUser.value,
           usuarioUser: usuarioUser.value,
           senhaUser: senhaUser.value,
+          tipoUser: tipoUser.value
         };
-        if (nomeUser.value == "" || usuarioUser.value == "" || senhaUser.value == "") {
+        if (
+          usuarioUser.value == "" ||
+          senhaUser.value == "" ||
+          tipoUser.value == ""
+        ) {
           Swal.fire({
             icon: "error",
             title: "Opa...",
@@ -187,9 +191,15 @@ export default function ManutencaoUsuario() {
       inputSenhaUser.setAttribute("id", "senhaUser");
       inputSenhaUser.className = "w-[50%] bg-transparent text-center focus: outline-none";
 
+      let inputTipoUser = document.createElement("input");
+      inputTipoUser.setAttribute("type", "text");
+      inputTipoUser.setAttribute("id", "tipoUser");
+      inputTipoUser.className = "w-[50%] bg-transparent text-center focus: outline-none";
+
       novoUserDiv.appendChild(novoUserSpan);
-      novoUserDiv.appendChild(inputNomeUser);
+      novoUserDiv.appendChild(inputUsuarioUser);
       novoUserDiv.appendChild(inputSenhaUser);
+      novoUserDiv.appendChild(inputTipoUser);
 
       listaUsers?.appendChild(novoUserDiv);
       setEditingNewUser(true);
@@ -228,9 +238,9 @@ export default function ManutencaoUsuario() {
         }).then((result) => {
           if (result.isConfirmed) {
             setUserEditado({
-              id: eClick.target.parentElement.parentElement.children[1].children[0].value,
-              nome: eClick.target.parentElement.parentElement.children[2].children[0].value,
-              qtd: eClick.target.parentElement.parentElement.children[3].children[0].value,
+              userId: eClick.target.parentElement.parentElement.children[1].children[0].value,
+              userUsuario: eClick.target.parentElement.parentElement.children[2].children[0].value,
+              userSenha: eClick.target.parentElement.parentElement.children[3].children[0].value,
             });
             refetch();
             setRerender("rerenderEdit");
@@ -303,15 +313,15 @@ export default function ManutencaoUsuario() {
                 aria-hidden="true"
               ></i>
             </a>
-            <li className="w-[25%]">
+            <li className="w-[20%]">
               <input
                 type={`text`}
                 disabled
-                defaultValue={user.nome}
+                defaultValue={user.id}
                 className="bg-transparent text-center"
               ></input>
             </li>
-            <li className="w-[25%]">
+            <li className="w-[20%]">
               <input
                 type={`text`}
                 disabled
@@ -319,7 +329,7 @@ export default function ManutencaoUsuario() {
                 className="bg-transparent text-center"
               ></input>
             </li>
-            <li className="w-[25%]">
+            <li className="w-[20%]">
               <input
                 type={`password`}
                 disabled
@@ -327,7 +337,7 @@ export default function ManutencaoUsuario() {
                 className="bg-transparent text-center"
               ></input>
             </li>
-            <li className="w-[25%]">
+            <li className="w-[20%]">
               <input
                 type={`text`}
                 disabled
@@ -346,12 +356,12 @@ export default function ManutencaoUsuario() {
         <span className="font-bold text-4xl text-black">Inventário</span>
         <div className="px-5">
           <div className="flex flex-row list-none font-bold">
-            <span className="w-[25%]">Nome</span>
+            <span className="w-[25%]">Id</span>
             <span className="w-[25%]">Usuario</span>
             <span className="w-[25%]">Senha</span>
             <span className="w-[25%]">Tipo</span>
           </div>
-          <ul id="listaUsuarios">{renderList(items)}</ul>
+          <ul id="listaUsuarios">{renderList(users)}</ul>
         </div>
         <div
           className="flex flex-row absolute bottom-0 p-5"

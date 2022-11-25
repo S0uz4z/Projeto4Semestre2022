@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import AdminContainer from "./AdminContainer";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import ManutencaoInventario from "./ManutencaoInventario";
 
 interface Usuario {
   id: number;
@@ -18,7 +19,7 @@ const renderMenu = (usuario: Usuario) => {
   if (usuario?.tipo === "admin") {
     return <AdminContainer></AdminContainer>;
   } else {
-    // return(<UsuarioContainer></UsuarioContainer>)
+    return <ManutencaoInventario></ManutencaoInventario>;
   }
 };
 

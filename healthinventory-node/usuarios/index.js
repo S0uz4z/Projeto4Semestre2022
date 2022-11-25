@@ -55,25 +55,81 @@ app.post('/usuarios', async (req, res) => {
     //Atribui json no corpo da requisição a uma variavel.
     let dados = req.body;
 
+    //Cria objeto.
+    const novoUser = {}
+
     //Map que cria uma chave e valor com dados vindos do objeto da requisição.
     Object.entries(dados).map(entries => {
-        novoUsuario[entries[0]] = entries[1];
+        novoUser[entries[0]] = entries[1];
     })
 
     //Método que envia requisição para microsserviço de barramento de eventos.
-    con.query(`INSERT INTO usuarios (nome, usuario, senha, tipo) VALUES ("${dados.nomeUser}", ${dados.usuarioUser}, ${dados.senhaUser})`, async (err, result) => {
+    con.query(`INSERT INTO usuarios (usuario, senha, tipo) VALUES ("${dados.usuarioUser}", "${dados.senhaUser}", "${dados.tipoUser}")`, async (err, result) => {
 
-        let items = {
+        let userMsg = {
             msg: 'Item criado com sucesso!',
             evento: 'Criação de usuario',
             result
         }
-        console.log(items)
+        try {
+            await axios.post('http://localhost:10000/eventos', userMsg)
+            res.status(200).send({
+                msg: "Usuario criado com sucesso",
+                item: novoUser
+            });
+        } catch (err) {
+            res.status(500).send({
+                msg: "Erro ao se conectar com barramento de eventos."
+            });
+        }
+    })
+})
+
+//Endpoint para receber a requisição do tipo PUT, editar um usuario e retornar mensagem de status da edição.
+app.put('/usuarios/:id', (req, res) => {
+
+    //Atribui id vindo da URL da requisição a uma variável.
+    let userId = req.params.id;
+    
+    let infoItem = req.body;
+
+    con.query(`UPDATE usuarios SET usuario = '${infoItem.userUsuario}', senha = ${infoItem.userSenha} WHERE id = ${userId}`, async (err, result) => {
+        console.log(err)
+        let usersMsg = {
+            msg: 'Usuário editado com sucesso!',
+            evento: 'Edição de Usuario',
+            result
+        }
+        try {
+            await axios.post('http://localhost:10000/eventos', usersMsg)
+            res.status(200).send({
+                msg: "Usuario editado com sucesso"
+            });
+        } catch (err) {
+            res.status(500).send({
+                msg: "Erro ao se conectar com barramento de eventos."
+            });
+        }
+    })
+})
+
+//Endpoint para receber a requisição do tipo DELETE, excluir um item e retornar mensagem de status da exclusão.
+app.delete('/usuarios/:id', (req, res) => {
+
+    //Atribui id vindo da URL da requisição a uma variável.
+    let userId = req.params.id;
+
+    con.query(`delete from usuarios where id = ${userId}`, async (err, result) => {
+        console.log(err)
+        let items = {
+            msg: 'Usuario deletado com sucesso!',
+            evento: 'Delete de usuario',
+            result
+        }
         try {
             await axios.post('http://localhost:10000/eventos', items)
             res.status(200).send({
-                msg: "Usuario criado com sucesso",
-                item: novoItem
+                msg: "Usuario deletado com sucesso"
             });
         } catch (err) {
             res.status(500).send({
