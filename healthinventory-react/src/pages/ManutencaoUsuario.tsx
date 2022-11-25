@@ -353,7 +353,7 @@ export default function ManutencaoUsuario() {
   return (
     <div className="w-full h-screen mt-10">
       <div className="w-[50%] min-h-[50%] border-black border-2 border-solid m-auto text-center relative">
-        <span className="font-bold text-4xl text-black">Inventário</span>
+        <span className="font-bold text-4xl text-black">Usuários</span>
         <div className="px-5">
           <div className="flex flex-row list-none font-bold">
             <span className="w-[25%]">Id</span>
