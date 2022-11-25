@@ -48,13 +48,13 @@ function Login(props: any) {
 
   return (
     <div className="App flex">
-      <div className="w-[40%] h-screen flex flex-col bg-[#10543c]">
+      <div className="w-[40%] h-screen flex-col bg-[#10543c] hidden md:flex">
         <div className="w-[40%] m-auto text-white text-center flex flex-col">
           <i className="fa-solid fa-clipboard text-9xl py-3"></i>
           <span>HEALTHINVENTORY</span>
         </div>
       </div>
-      <div className="w-[60%] bg-white flex">
+      <div className="w-full md:w-[60%] bg-white flex mt-[30%] md:m-0">
         <div className="m-auto text-center">
           <span className="font-extrabold text-5xl text-[#10543c] block mb-12">
             Login
