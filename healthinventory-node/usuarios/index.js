@@ -94,7 +94,6 @@ app.put('/usuarios/:id', (req, res) => {
     let infoItem = req.body;
 
     con.query(`UPDATE usuarios SET usuario = '${infoItem.userUsuario}', senha = ${infoItem.userSenha} WHERE id = ${userId}`, async (err, result) => {
-        console.log(err)
         let usersMsg = {
             msg: 'Usuário editado com sucesso!',
             evento: 'Edição de Usuario',
@@ -120,7 +119,6 @@ app.delete('/usuarios/:id', (req, res) => {
     let userId = req.params.id;
 
     con.query(`delete from usuarios where id = ${userId}`, async (err, result) => {
-        console.log(err)
         let items = {
             msg: 'Usuario deletado com sucesso!',
             evento: 'Delete de usuario',
@@ -139,4 +137,5 @@ app.delete('/usuarios/:id', (req, res) => {
     })
 })
 
+console.log('Microsserviço de Usuário iniciado.')
 app.listen(9000)

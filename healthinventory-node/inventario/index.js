@@ -76,7 +76,6 @@ app.post('/inventario', async (req, res) => {
             evento: 'Criação de Item',
             result
         }
-        console.log(items)
         try {
             await axios.post('http://localhost:10000/eventos', items)
             res.status(200).send({
@@ -125,7 +124,6 @@ app.delete('/inventario/:id', (req, res) => {
     let idItem = req.params.id;
 
     con.query(`delete from itens where id = ${idItem}`, async (err, result) => {
-        console.log(err)
         let items = {
             msg: 'Item deletado com sucesso!',
             evento: 'Delete de Item',
